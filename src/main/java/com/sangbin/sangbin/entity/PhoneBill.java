@@ -19,5 +19,20 @@ public class PhoneBill {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId")
-    private Customer customer;
+    private Customer customers;
+
+    @Column(nullable = false)
+    private String billingPeriod; // 청구 기간
+
+    @Column(nullable = false)
+    private String amountDue; // 청구 금액
+
+    @Column(nullable = false)
+    private String dueDate; // 납부 기한
+
+    @Column(nullable = false)
+    private String paymentStatus; // 결제 상태
+
+    @Column(nullable = false)
+    private String issueDate; // 발행 날짜
 }

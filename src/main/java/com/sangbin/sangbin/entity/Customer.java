@@ -19,11 +19,14 @@ public class Customer {
 
     private String name;
 
-    // 요금제
+    private String number;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customer")
     private List<PhoneBill> phoneBills;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customer")
     private List<Mobile> mobiles;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Contract> contracts;
 }

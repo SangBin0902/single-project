@@ -22,5 +22,5 @@ public class Mobile {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId")
-    private Customer customer;
+    private Customer customers;
 }
