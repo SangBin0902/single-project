@@ -19,7 +19,7 @@ public class PhoneBill {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId")
-    private Customer customers;
+    private Customer customer;
 
     @Column(nullable = false)
     private String billingPeriod; // 청구 기간

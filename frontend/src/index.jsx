@@ -1,5 +1,7 @@
 import React from "react";
 import { CssBaseline, Container, Typography, Button, Grid, Card, CardContent, Drawer, AppBar, Toolbar, List, ListItem, ListItemText} from "@mui/material";
+import {Link} from "react-router-dom";
+import Header from "./header";
 
 const drawerWidth = 240;
 
@@ -13,6 +15,7 @@ const Index = () => {
     const sidebarItems = [
         { text: "대시보드", link: "#" },
         { text: "사용자 관리", link: "#" },
+        { text: "영업 실적", link: "/sales" },
         { text: "통계", link: "#" },
         { text: "설정", link: "#" },
     ];
@@ -20,16 +23,7 @@ const Index = () => {
     return (
         <>
             <CssBaseline />
-            <AppBar position="fixed">
-                <Toolbar>
-                    <Button color="inherit" onClick={toggleDrawer}>
-                        메뉴
-                    </Button>
-                    <Typography variant="h6" style={{ flexGrow: 1 }}>
-                        관리자 대시보드
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Header toggleDrawer={toggleDrawer} />
             <Drawer
                 variant="temporary"
                 open={open}
@@ -45,7 +39,7 @@ const Index = () => {
             >
                 <List>
                     {sidebarItems.map((item, index) => (
-                        <ListItem button key={index}>
+                        <ListItem button key={index} component={Link} to={item.link}>
                             <ListItemText primary={item.text} />
                         </ListItem>
                     ))}
