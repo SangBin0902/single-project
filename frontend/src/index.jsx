@@ -1,12 +1,14 @@
 import React from "react";
 import { CssBaseline, Container, Typography, Button, Grid, Card, CardContent, Drawer, AppBar, Toolbar, List, ListItem, ListItemText} from "@mui/material";
 import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "./header";
 
 const drawerWidth = 240;
 
 const Index = () => {
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const toggleDrawer = () => {
         setOpen(!open);
@@ -19,6 +21,10 @@ const Index = () => {
         { text: "통계", link: "#" },
         { text: "설정", link: "#" },
     ];
+
+    const handleCardClick = () => {
+        navigate("/todo");
+    };
 
     return (
         <>
@@ -71,6 +77,20 @@ const Index = () => {
                             <CardContent>
                                 <Typography variant="h5">설정</Typography>
                                 <Typography color="textSecondary">시스템 설정 및 환경 구성</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card 
+                            onClick={handleCardClick}
+                            style={{ 
+                                textDecoration: 'none',
+                                border: '1px solid #ccc',
+                                cursor: 'pointer',
+                                }}>
+                            <CardContent>
+                                <Typography variant="h5">할일</Typography>
+                                <Typography color="textSecondary">Todo List</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
