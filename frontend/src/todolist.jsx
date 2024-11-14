@@ -1,9 +1,10 @@
 import React from "react";
-import './style/todolist.css';
+import './style/todolist2.css';
 import Head from "./head";
 import TodoEditor from "./todoEditor";
-import TodoItem from "./todoItem";
+import TodoList2 from "./todolist2";
 import { useState, useRef } from "react";
+import TestComp from "./testComp";
 
 const mockTodo = [
     {
@@ -41,19 +42,24 @@ const Todolist = () => {
         idRef.current += 1;
     };
 
+    const onUpdate = (targetId) => {
+        setTodo(
+            todo.map((it) => 
+                it.id === targetId ? {...it, isDone: !it.isDone } : it
+            )
+        );
+    };
+
+    const onDelete = (targetId) => {
+        setTodo(todo.filter((it) => it.id !== targetId));
+    };
+
     return (
         <div className="container">
+            <TestComp />
             <Head />
             <TodoEditor onCreate={onCreate} />
-            <div className="TodoList">
-                <h4>Todo List ⚡️</h4>
-                <input className="searchbar" placeholder="검색어를 입력하세요" />
-                <div className="list_wrapper">
-                    <TodoItem />
-                    <TodoItem />
-                    <TodoItem />
-                </div>
-            </div>
+            <TodoList2 todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
         </div>
     );
 };
