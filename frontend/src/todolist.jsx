@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useCallback, useReducer, useRef } from "react";
 import './style/todolist2.css';
 import Head from "./head";
 import TodoEditor from "./todoEditor";
 import TodoList2 from "./todolist2";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import TestComp from "./testComp";
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "CREATE": {
+            return [action.newItem, ...state];
+        }
+        case "UPDATE": {
+            return state.map((it) =>
+            it.id === action.targetId
+                ? {
+                    ...it,
+                    isDone: !it.isDone,
+                }
+                : it
+            );
+        }
+        case "DELETE": {
+            return state.filter((it) => it.id != action.targetId);
+        }
+        default:
+            return state;
+    }
+}
 
 const mockTodo = [
     {
@@ -27,39 +50,47 @@ const mockTodo = [
     },
 ];
 
+const TodoContext = React.createContext();
+
 const Todolist = () => {
-    const [todo, setTodo] = useState(mockTodo);
+    const [todo, dispatch] = useReducer(reducer, mockTodo);
     const idRef = useRef(3);
 
     const onCreate = (content) => {
-        const newItem = {
-            id: idRef.current,
-            content,
-            isDone: false,
-            createdDate: new Date().getTime(),
-        };
-        setTodo([newItem, ...todo]);
+        dispatch({
+            type: "CREATE",
+            newItem: {
+                id: idRef.current,
+                content,
+                isDone: false,
+                createdDate: new Date().getTime(),
+            },
+        });
         idRef.current += 1;
     };
 
-    const onUpdate = (targetId) => {
-        setTodo(
-            todo.map((it) => 
-                it.id === targetId ? {...it, isDone: !it.isDone } : it
-            )
-        );
-    };
+    const onUpdate = useCallback((targetId) => {
+        dispatch({
+            type: "UPDATE",
+            targetId,
+        });
+    },[]);
 
-    const onDelete = (targetId) => {
-        setTodo(todo.filter((it) => it.id !== targetId));
-    };
+    const onDelete = useCallback((targetId) => {
+        dispatch({
+            type: "DELETE",
+            targetId,
+        });
+    },[]);
 
     return (
         <div className="container">
             <TestComp />
             <Head />
-            <TodoEditor onCreate={onCreate} />
-            <TodoList2 todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
+            <TodoContext.Provider>
+                <TodoEditor onCreate={onCreate} />
+                <TodoList2 todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
+            </TodoContext.Provider>
         </div>
     );
 };
