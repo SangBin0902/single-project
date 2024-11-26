@@ -1,0 +1,32 @@
+.DiaryHeader {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.DiaryHeader > div {
+    display: flex;
+}
+
+.DiaryHeader button {
+    font-family: "Nanum Pen Script";
+}
+
+.DiaryHeader .header_title {
+    width: 50%;
+    font-size: 25px;
+    justify-content: center;
+}
+
+.DiaryHeader .header_left {
+    width: 25%;
+    justify-content: start;
+}
+
+.DiaryHeader .header_right {
+    width: 25%;
+    justify-content: end;
+}
